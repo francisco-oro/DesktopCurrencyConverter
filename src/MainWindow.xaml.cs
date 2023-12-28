@@ -218,8 +218,7 @@ namespace CurrencyConverter_Static
         public MainWindow()
         {
             InitializeComponent();
-            BindCurrency();
-            GetData();  
+            GetValue();
         }
 
         public static async Task<Root> GetData<T>(string url)
@@ -231,12 +230,12 @@ namespace CurrencyConverter_Static
                 {
                     client.Timeout = TimeSpan.FromMinutes(1);
                     HttpResponseMessage response = await client.GetAsync(url);
-                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)        
                     {
                         var ResponseString = await response.Content.ReadAsStringAsync();
                         var ResponseObject = JsonConvert.DeserializeObject<Root>(ResponseString);
 
-                        MessageBox.Show("TimeStamp: " + ResponseObject.timestamp, "Information", MessageBoxButton.OK);
+                        MessageBox.Show("TimeStamp: " + ResponseObject, "Information", MessageBoxButton.OK);
 
                         return ResponseObject;
                     }
@@ -263,36 +262,191 @@ namespace CurrencyConverter_Static
 
         private void BindCurrency()
         {
-            mycon();
             DataTable dt = new DataTable();
 
-            sqlCommand = new SqlCommand("SELECT Id, CurrencyName FROM Currency_Master", sqlConnection);
-            sqlCommand.CommandType = CommandType.Text;
-            sqlDataAdapter = new SqlDataAdapter(sqlCommand);
+            dt.Columns.Add("Text");
+            dt.Columns.Add("Value");
 
-            sqlDataAdapter.Fill(dt);
-
-            DataRow newRow = dt.NewRow();
-
-            newRow["Id"] = 0;
-            newRow["CurrencyName"] = "--SELECT--";
-
-            dt.Rows.InsertAt(newRow, 0);
-
-            if (dt != null & dt.Rows.Count > 0)
-            {
-                cmbFromCurrency.ItemsSource = dt.DefaultView;
-                cmbToCurrency.ItemsSource = dt.DefaultView;  
-            }
-            sqlConnection.Close();
+            dt.Rows.Add("--SELECT--", 0);
+            dt.Rows.Add("AED", val.rates.AED);
+            dt.Rows.Add("AFN", val.rates.AFN);
+            dt.Rows.Add("ALL", val.rates.ALL);
+            dt.Rows.Add("AMD", val.rates.AMD);
+            dt.Rows.Add("ANG", val.rates.ANG);
+            dt.Rows.Add("AOA", val.rates.AOA);
+            dt.Rows.Add("ARS", val.rates.ARS);
+            dt.Rows.Add("AUD", val.rates.AUD);
+            dt.Rows.Add("AWG", val.rates.AWG);
+            dt.Rows.Add("AZN", val.rates.AZN);
+            dt.Rows.Add("BAM", val.rates.BAM);
+            dt.Rows.Add("BBD", val.rates.BBD);
+            dt.Rows.Add("BDT", val.rates.BDT);
+            dt.Rows.Add("BGN", val.rates.BGN);
+            dt.Rows.Add("BHD", val.rates.BHD);
+            dt.Rows.Add("BIF", val.rates.BIF);
+            dt.Rows.Add("BMD", val.rates.BMD);
+            dt.Rows.Add("BND", val.rates.BND);
+            dt.Rows.Add("BOB", val.rates.BOB);
+            dt.Rows.Add("BRL", val.rates.BRL);
+            dt.Rows.Add("BSD", val.rates.BSD);
+            dt.Rows.Add("BTC", val.rates.BTC);
+            dt.Rows.Add("BTN", val.rates.BTN);
+            dt.Rows.Add("BWP", val.rates.BWP);
+            dt.Rows.Add("BYN", val.rates.BYN);
+            dt.Rows.Add("BZD", val.rates.BZD);
+            dt.Rows.Add("CAD", val.rates.CAD);
+            dt.Rows.Add("CDF", val.rates.CDF);
+            dt.Rows.Add("CHF", val.rates.CHF);
+            dt.Rows.Add("CLF", val.rates.CLF);
+            dt.Rows.Add("CLP", val.rates.CLP);
+            dt.Rows.Add("CNH", val.rates.CNH);
+            dt.Rows.Add("CNY", val.rates.CNY);
+            dt.Rows.Add("COP", val.rates.COP);
+            dt.Rows.Add("CRC", val.rates.CRC);
+            dt.Rows.Add("CUC", val.rates.CUC);
+            dt.Rows.Add("CUP", val.rates.CUP);
+            dt.Rows.Add("CVE", val.rates.CVE);
+            dt.Rows.Add("CZK", val.rates.CZK);
+            dt.Rows.Add("DJF", val.rates.DJF);
+            dt.Rows.Add("DKK", val.rates.DKK);
+            dt.Rows.Add("DOP", val.rates.DOP);
+            dt.Rows.Add("DZD", val.rates.DZD);
+            dt.Rows.Add("EGP", val.rates.EGP);
+            dt.Rows.Add("ERN", val.rates.ERN);
+            dt.Rows.Add("ETB", val.rates.ETB);
+            dt.Rows.Add("EUR", val.rates.EUR);
+            dt.Rows.Add("FJD", val.rates.FJD);
+            dt.Rows.Add("FKP", val.rates.FKP);
+            dt.Rows.Add("GBP", val.rates.GBP);
+            dt.Rows.Add("GEL", val.rates.GEL);
+            dt.Rows.Add("GGP", val.rates.GGP);
+            dt.Rows.Add("GHS", val.rates.GHS);
+            dt.Rows.Add("GIP", val.rates.GIP);
+            dt.Rows.Add("GMD", val.rates.GMD);
+            dt.Rows.Add("GNF", val.rates.GNF);
+            dt.Rows.Add("GTQ", val.rates.GTQ);
+            dt.Rows.Add("GYD", val.rates.GYD);
+            dt.Rows.Add("HKD", val.rates.HKD);
+            dt.Rows.Add("HNL", val.rates.HNL);
+            dt.Rows.Add("HRK", val.rates.HRK);
+            dt.Rows.Add("HTG", val.rates.HTG);
+            dt.Rows.Add("HUF", val.rates.HUF);
+            dt.Rows.Add("IDR", val.rates.IDR);
+            dt.Rows.Add("ILS", val.rates.ILS);
+            dt.Rows.Add("IMP", val.rates.IMP);
+            dt.Rows.Add("INR", val.rates.INR);
+            dt.Rows.Add("IQD", val.rates.IQD);
+            dt.Rows.Add("IRR", val.rates.IRR);
+            dt.Rows.Add("ISK", val.rates.ISK);
+            dt.Rows.Add("JEP", val.rates.JEP);
+            dt.Rows.Add("JMD", val.rates.JMD);
+            dt.Rows.Add("JOD", val.rates.JOD);
+            dt.Rows.Add("JPY", val.rates.JPY);
+            dt.Rows.Add("KES", val.rates.KES);
+            dt.Rows.Add("KGS", val.rates.KGS);
+            dt.Rows.Add("KHR", val.rates.KHR);
+            dt.Rows.Add("KMF", val.rates.KMF);
+            dt.Rows.Add("KPW", val.rates.KPW);
+            dt.Rows.Add("KRW", val.rates.KRW);
+            dt.Rows.Add("KWD", val.rates.KWD);
+            dt.Rows.Add("KYD", val.rates.KYD);
+            dt.Rows.Add("KZT", val.rates.KZT);
+            dt.Rows.Add("LAK", val.rates.LAK);
+            dt.Rows.Add("LBP", val.rates.LBP);
+            dt.Rows.Add("LKR", val.rates.LKR);
+            dt.Rows.Add("LRD", val.rates.LRD);
+            dt.Rows.Add("LSL", val.rates.LSL);
+            dt.Rows.Add("LYD", val.rates.LYD);
+            dt.Rows.Add("MAD", val.rates.MAD);
+            dt.Rows.Add("MDL", val.rates.MDL);
+            dt.Rows.Add("MGA", val.rates.MGA);
+            dt.Rows.Add("MKD", val.rates.MKD);
+            dt.Rows.Add("MMK", val.rates.MMK);
+            dt.Rows.Add("MNT", val.rates.MNT);
+            dt.Rows.Add("MOP", val.rates.MOP);
+            dt.Rows.Add("MRU", val.rates.MRU);
+            dt.Rows.Add("MUR", val.rates.MUR);
+            dt.Rows.Add("MVR", val.rates.MVR);
+            dt.Rows.Add("MWK", val.rates.MWK);
+            dt.Rows.Add("MXN", val.rates.MXN);
+            dt.Rows.Add("MYR", val.rates.MYR);
+            dt.Rows.Add("MZN", val.rates.MZN);
+            dt.Rows.Add("NAD", val.rates.NAD);
+            dt.Rows.Add("NGN", val.rates.NGN);
+            dt.Rows.Add("NIO", val.rates.NIO);
+            dt.Rows.Add("NOK", val.rates.NOK);
+            dt.Rows.Add("NPR", val.rates.NPR);
+            dt.Rows.Add("NZD", val.rates.NZD);
+            dt.Rows.Add("OMR", val.rates.OMR);
+            dt.Rows.Add("PAB", val.rates.PAB);
+            dt.Rows.Add("PEN", val.rates.PEN);
+            dt.Rows.Add("PGK", val.rates.PGK);
+            dt.Rows.Add("PHP", val.rates.PHP);
+            dt.Rows.Add("PKR", val.rates.PKR);
+            dt.Rows.Add("PLN", val.rates.PLN);
+            dt.Rows.Add("PYG", val.rates.PYG);
+            dt.Rows.Add("QAR", val.rates.QAR);
+            dt.Rows.Add("RON", val.rates.RON);
+            dt.Rows.Add("RSD", val.rates.RSD);
+            dt.Rows.Add("RUB", val.rates.RUB);
+            dt.Rows.Add("RWF", val.rates.RWF);
+            dt.Rows.Add("SAR", val.rates.SAR);
+            dt.Rows.Add("SBD", val.rates.SBD);
+            dt.Rows.Add("SCR", val.rates.SCR);
+            dt.Rows.Add("SDG", val.rates.SDG);
+            dt.Rows.Add("SEK", val.rates.SEK);
+            dt.Rows.Add("SGD", val.rates.SGD);
+            dt.Rows.Add("SHP", val.rates.SHP);
+            dt.Rows.Add("SLL", val.rates.SLL);
+            dt.Rows.Add("SOS", val.rates.SOS);
+            dt.Rows.Add("SRD", val.rates.SRD);
+            dt.Rows.Add("SSP", val.rates.SSP);
+            dt.Rows.Add("STD", val.rates.STD);
+            dt.Rows.Add("STN", val.rates.STN);
+            dt.Rows.Add("SVC", val.rates.SVC);
+            dt.Rows.Add("SYP", val.rates.SYP);
+            dt.Rows.Add("SZL", val.rates.SZL);
+            dt.Rows.Add("THB", val.rates.THB);
+            dt.Rows.Add("TJS", val.rates.TJS);
+            dt.Rows.Add("TMT", val.rates.TMT);
+            dt.Rows.Add("TND", val.rates.TND);
+            dt.Rows.Add("TOP", val.rates.TOP);
+            dt.Rows.Add("TRY", val.rates.TRY);
+            dt.Rows.Add("TTD", val.rates.TTD);
+            dt.Rows.Add("TWD", val.rates.TWD);
+            dt.Rows.Add("TZS", val.rates.TZS);
+            dt.Rows.Add("UAH", val.rates.UAH);
+            dt.Rows.Add("UGX", val.rates.UGX);
+            dt.Rows.Add("USD", val.rates.USD);
+            dt.Rows.Add("UYU", val.rates.UYU);
+            dt.Rows.Add("UZS", val.rates.UZS);
+            dt.Rows.Add("VES", val.rates.VES);
+            dt.Rows.Add("VND", val.rates.VND);
+            dt.Rows.Add("VUV", val.rates.VUV);
+            dt.Rows.Add("WST", val.rates.WST);
+            dt.Rows.Add("XAF", val.rates.XAF);
+            dt.Rows.Add("XAG", val.rates.XAG);
+            dt.Rows.Add("XAU", val.rates.XAU);
+            dt.Rows.Add("XCD", val.rates.XCD);
+            dt.Rows.Add("XDR", val.rates.XDR);
+            dt.Rows.Add("XOF", val.rates.XOF);
+            dt.Rows.Add("XPD", val.rates.XPD);
+            dt.Rows.Add("XPF", val.rates.XPF);
+            dt.Rows.Add("XPT", val.rates.XPT);
+            dt.Rows.Add("YER", val.rates.YER);
+            dt.Rows.Add("ZAR", val.rates.ZAR);
+            dt.Rows.Add("ZMW", val.rates.ZMW);
+            dt.Rows.Add("ZWL", val.rates.ZWL);
 
             cmbFromCurrency.ItemsSource = dt.DefaultView;
-            cmbFromCurrency.DisplayMemberPath = "CurrencyName";
-            cmbFromCurrency.SelectedValuePath = "Id";   
+            cmbFromCurrency.DisplayMemberPath = "Text";
+            cmbFromCurrency.SelectedValuePath = "Value";
+            cmbFromCurrency.SelectedIndex = 0; 
 
             cmbToCurrency.ItemsSource = dt.DefaultView;
-            cmbToCurrency.DisplayMemberPath = "CurrencyName";
-            cmbToCurrency.SelectedValuePath = "Id";
+            cmbToCurrency.DisplayMemberPath = "Text";
+            cmbToCurrency.SelectedValuePath = "Value";
+            cmbToCurrency.SelectedIndex = 0;  
         }
 
         private void Convert_Click(object sender, RoutedEventArgs e)
@@ -338,7 +492,7 @@ namespace CurrencyConverter_Static
 
                 //Calculation for currency converter is From Currency value multiply(*) 
                 // with amount textbox value and then the total is divided(/) with To Currency value
-                ConvertedValue = (double.Parse(cmbFromCurrency.SelectedValue.ToString()) * double.Parse(txtCurrency.Text)) / double.Parse(cmbToCurrency.SelectedValue.ToString());
+                ConvertedValue = (double.Parse(cmbToCurrency.SelectedValue.ToString()) * double.Parse(txtCurrency.Text)) / double.Parse(cmbFromCurrency.SelectedValue.ToString());
 
                 //Show in label converted currency and converted currency name.
                 lblCurrency.Content = cmbToCurrency.Text + " " + ConvertedValue.ToString("N3");
